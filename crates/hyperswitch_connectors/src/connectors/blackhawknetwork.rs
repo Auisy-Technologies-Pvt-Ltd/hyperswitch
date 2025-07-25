@@ -1,6 +1,7 @@
 pub mod transformers;
-use common_enums::enums::PaymentMethodType;
+use std::sync::LazyLock;
 
+use common_enums::{enums, enums::PaymentMethodType};
 use common_utils::{
     errors::CustomResult,
     ext_traits::BytesExt,
@@ -8,9 +9,8 @@ use common_utils::{
     types::{AmountConvertor, StringMajorUnit, StringMajorUnitForConnector},
 };
 use error_stack::{report, ResultExt};
-use masking::Maskable;
-
 use hyperswitch_domain_models::{
+    payment_method_data::PaymentMethodData,
     router_data::{AccessToken, ConnectorAuthType, ErrorResponse, RouterData},
     router_flow_types::{
         access_token_auth::AccessTokenAuth,
@@ -26,7 +26,8 @@ use hyperswitch_domain_models::{
         PaymentsSyncData, RefundsData, SetupMandateRequestData,
     },
     router_response_types::{
-        PaymentMethodDetails, PaymentsResponseData, RefundsResponseData, SupportedPaymentMethodsExt,
+        ConnectorInfo, PaymentMethodDetails, PaymentsResponseData, RefundsResponseData,
+        SupportedPaymentMethods, SupportedPaymentMethodsExt,
     },
     types::{
         PaymentsAuthorizeRouterData, PaymentsCaptureRouterData, PaymentsPreProcessingRouterData,
@@ -45,14 +46,10 @@ use hyperswitch_interfaces::{
     types::{self, Response},
     webhooks,
 };
-use std::sync::LazyLock;
+use masking::Maskable;
+use transformers as blackhawknetwork;
 
 use crate::{constants::headers, types::ResponseRouterData, utils};
-use common_enums::enums;
-use hyperswitch_domain_models::payment_method_data::PaymentMethodData;
-use hyperswitch_domain_models::router_response_types::{ConnectorInfo, SupportedPaymentMethods};
-
-use transformers as blackhawknetwork;
 
 #[derive(Clone)]
 pub struct Blackhawknetwork {
