@@ -2515,6 +2515,7 @@ pub enum PaymentMethodDataType {
     Seicomart,
     PayEasy,
     Givex,
+    BhnCardNetwork,
     PaySafeCar,
     CardToken,
     LocalBankTransfer,
@@ -2726,6 +2727,7 @@ impl From<domain::payments::PaymentMethodData> for PaymentMethodDataType {
             domain::payments::PaymentMethodData::GiftCard(gift_card_data) => {
                 match *gift_card_data {
                     domain::payments::GiftCardData::Givex(_) => Self::Givex,
+                    domain::payments::GiftCardData::BhnCardNetwork(_)=>Self::BhnCardNetwork,
                     domain::payments::GiftCardData::PaySafeCard {} => Self::PaySafeCar,
                 }
             }

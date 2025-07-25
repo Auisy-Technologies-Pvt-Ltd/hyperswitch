@@ -5504,6 +5504,7 @@ pub enum PaymentMethodDataType {
     PermataBankTransfer,
     BcaBankTransfer,
     BniVaBankTransfer,
+    BhnCardNetwork,
     BriVaBankTransfer,
     CimbVaBankTransfer,
     DanamonVaBankTransfer,
@@ -5737,6 +5738,7 @@ impl From<PaymentMethodData> for PaymentMethodDataType {
             PaymentMethodData::GiftCard(gift_card_data) => match *gift_card_data {
                 payment_method_data::GiftCardData::Givex(_) => Self::Givex,
                 payment_method_data::GiftCardData::PaySafeCard {} => Self::PaySafeCar,
+                payment_method_data::GiftCardData::BhnCardNetwork(_) => Self::BhnCardNetwork,
             },
             PaymentMethodData::CardToken(_) => Self::CardToken,
             PaymentMethodData::OpenBanking(data) => match data {

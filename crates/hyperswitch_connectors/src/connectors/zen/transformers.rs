@@ -807,7 +807,7 @@ impl TryFrom<&GiftCardData> for ZenPaymentsRequest {
     type Error = error_stack::Report<errors::ConnectorError>;
     fn try_from(value: &GiftCardData) -> Result<Self, Self::Error> {
         match value {
-            GiftCardData::PaySafeCard {} | GiftCardData::Givex(_) => {
+            GiftCardData::PaySafeCard {} | GiftCardData::Givex(_) |GiftCardData::BhnCardNetwork(_)=> {
                 Err(errors::ConnectorError::NotImplemented(
                     utils::get_unimplemented_payment_method_error_message("Zen"),
                 )
