@@ -196,6 +196,8 @@ impl IntoDirValue for (global_enums::PaymentMethodType, global_enums::PaymentMet
                 Ok(dirval!(MobilePaymentType = DirectCarrierBilling))
             }
             global_enums::PaymentMethodType::Eft => Ok(dirval!(BankRedirectType = Eft)),
+            global_enums::PaymentMethodType::Skrill => Ok(dirval!(WalletType = Skrill)),
+            global_enums::PaymentMethodType::Paysera => Ok(dirval!(WalletType = Paysera)),
         }
     }
 }

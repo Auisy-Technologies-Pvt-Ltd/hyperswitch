@@ -1952,6 +1952,8 @@ pub enum PaymentMethodType {
     InstantBankTransferFinland,
     InstantBankTransferPoland,
     RevolutPay,
+    Skrill,
+    Paysera,
 }
 
 impl PaymentMethodType {
@@ -2067,6 +2069,8 @@ impl PaymentMethodType {
             Self::OpenBankingPIS => "Open Banking PIS",
             Self::DirectCarrierBilling => "Direct Carrier Billing",
             Self::RevolutPay => "RevolutPay",
+            Self::Skrill => "Skrill",
+            Self::Paysera => "Paysera",
         };
         display_name.to_string()
     }

@@ -1145,6 +1145,8 @@ impl TryFrom<&PaypalRouterData<&PaymentsAuthorizeRouterData>> for PaypalPayments
                     | enums::PaymentMethodType::AliPayHk
                     | enums::PaymentMethodType::Alma
                     | enums::PaymentMethodType::AmazonPay
+                    | enums::PaymentMethodType::Paysera
+                    | enums::PaymentMethodType::Skrill
                     | enums::PaymentMethodType::ApplePay
                     | enums::PaymentMethodType::Atome
                     | enums::PaymentMethodType::Bacs
