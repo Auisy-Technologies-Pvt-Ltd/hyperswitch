@@ -1193,7 +1193,6 @@ default_imp_for_create_customer!(
     connectors::Amazonpay,
     connectors::Archipel,
     connectors::Authipay,
-    connectors::Authorizedotnet,
     connectors::Bambora,
     connectors::Bamboraapac,
     connectors::Bankofamerica,
