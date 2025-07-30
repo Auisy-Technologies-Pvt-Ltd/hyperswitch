@@ -845,16 +845,20 @@ mod tests {
     use std::sync::Arc;
 
     use api_models::webhooks as api_webhooks;
+    use common_enums::IntentStatus;
     use common_utils::{
-        generate_organization_id_of_default_length, type_name, types::keymanager::Identifier,
+        generate_organization_id_of_default_length, type_name,
+        types::{keymanager::Identifier, MinorUnit},
     };
     use diesel_models::{
         business_profile::WebhookDetails,
         enums::{self},
         events::EventMetadata,
     };
+    use futures::future::join_all;
     use hyperswitch_domain_models::merchant_account::MerchantAccountSetter;
     use time::macros::datetime;
+    use tokio::time::{timeout, Duration};
 
     use crate::{
         core::webhooks as webhooks_core,
@@ -1106,11 +1110,6 @@ mod tests {
         assert_eq!(updated_event.primary_object_id, payment_id);
         assert_eq!(updated_event.event_id, event_id);
     }
-
-    use common_enums::IntentStatus;
-    use common_utils::types::MinorUnit;
-    use futures::future::join_all;
-    use tokio::time::{timeout, Duration};
 
     #[cfg(feature = "v1")]
     #[allow(clippy::panic_in_result_fn)]
