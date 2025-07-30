@@ -6056,26 +6056,26 @@ pub struct PaymentListConstraints {
     /// The end amount to filter list of transactions which are less than or equal to the end amount
     pub end_amount: Option<i64>,
     /// The connector to filter payments list
-    #[param(value_type = Option<Connector>)]
-    pub connector: Option<api_enums::Connector>,
+    #[param(value_type = Option<Vec<Connector>>)]
+    pub connector: Option<Vec<api_enums::Connector>>,
     /// The currency to filter payments list
-    #[param(value_type = Option<Currency>)]
-    pub currency: Option<enums::Currency>,
+    #[param(value_type = Option<Vec<Currency>>)]
+    pub currency: Option<Vec<enums::Currency>>,
     /// The payment status to filter payments list
-    #[param(value_type = Option<IntentStatus>)]
-    pub status: Option<enums::IntentStatus>,
+    #[param(value_type = Option<Vec<IntentStatus>>)]
+    pub status: Option<Vec<enums::IntentStatus>>,
     /// The payment method type to filter payments list
-    #[param(value_type = Option<PaymentMethod>)]
-    pub payment_method_type: Option<enums::PaymentMethod>,
+    #[param(value_type = Option<Vec<PaymentMethod>>)]
+    pub payment_method_type: Option<Vec<enums::PaymentMethod>>,
     /// The payment method subtype to filter payments list
-    #[param(value_type = Option<PaymentMethodType>)]
-    pub payment_method_subtype: Option<enums::PaymentMethodType>,
+    #[param(value_type = Option<Vec<PaymentMethodType>>)]
+    pub payment_method_subtype: Option<Vec<enums::PaymentMethodType>>,
     /// The authentication type to filter payments list
-    #[param(value_type = Option<AuthenticationType>)]
-    pub authentication_type: Option<enums::AuthenticationType>,
+    #[param(value_type = Option<Vec<AuthenticationType>>)]
+    pub authentication_type: Option<Vec<enums::AuthenticationType>>,
     /// The merchant connector id to filter payments list
-    #[param(value_type = Option<String>)]
-    pub merchant_connector_id: Option<id_type::MerchantConnectorAccountId>,
+    #[param(value_type = Option<Vec<String>>)]
+    pub merchant_connector_id: Option<Vec<id_type::MerchantConnectorAccountId>>,
     /// The field on which the payments list should be sorted
     #[serde(default)]
     pub order_on: SortOn,
@@ -6083,8 +6083,8 @@ pub struct PaymentListConstraints {
     #[serde(default)]
     pub order_by: SortBy,
     /// The card networks to filter payments list
-    #[param(value_type = Option<CardNetwork>)]
-    pub card_network: Option<enums::CardNetwork>,
+    #[param(value_type = Option<Vec<CardNetwork>>)]
+    pub card_network: Option<Vec<enums::CardNetwork>>,
     /// The identifier for merchant order reference id
     pub merchant_order_reference_id: Option<String>,
 }

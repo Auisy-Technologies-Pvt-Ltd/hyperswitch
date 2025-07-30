@@ -7154,10 +7154,36 @@ pub async fn apply_filters_on_payments_v2(
                 .await
                 .to_not_found_response(errors::ApiErrorResponse::PaymentNotFound)?;
 
+            let total_count = if constraints.has_no_attempt_filters() {
+                i64::try_from(active_attempt_ids.len())
+                    .change_context(errors::ApiErrorResponse::InternalServerError)
+                    .attach_printable("Error while converting from usize to i64")
+            } else {
+                let active_attempt_ids = active_attempt_ids
+                    .into_iter()
+                    .flatten()
+                    .collect::<Vec<String>>();
+
+                db.get_total_count_of_filtered_payment_attempts(
+                    merchant_context.get_merchant_account().get_id(),
+                    &active_attempt_ids,
+                    constraints.connector,
+                    constraints.payment_method_type,
+                    constraints.payment_method_subtype,
+                    constraints.authentication_type,
+                    constraints.merchant_connector_id,
+                    constraints.card_network,
+                    merchant_context.get_merchant_account().storage_scheme,
+                )
+                .await
+                .change_context(errors::ApiErrorResponse::InternalServerError)
+                .attach_printable("Error while retrieving total count of payment attempts")
+            }?;
+
             Ok(services::ApplicationResponse::Json(
                 payments_api::PaymentListResponse {
                     count: data.len(),
-                    total_count: active_attempt_ids.len() as i64,
+                    total_count,
                     data,
                 },
             ))
