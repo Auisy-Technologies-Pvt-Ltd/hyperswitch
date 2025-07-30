@@ -4,7 +4,10 @@ use std::sync::LazyLock;
 
 use api_models::feature_matrix;
 use base64::Engine;
-use common_enums::{enums::{self, PaymentMethodType}, CardNetwork};
+use common_enums::{
+    enums::{self, PaymentMethodType},
+    CardNetwork,
+};
 use common_utils::{
     errors::CustomResult,
     ext_traits::BytesExt,
@@ -25,7 +28,7 @@ use hyperswitch_domain_models::{
         RefundsData, SetupMandateRequestData,
     },
     router_response_types::{
-        ConnectorInfo, PaymentMethodDetails, PaymentsResponseData, RefundsResponseData, 
+        ConnectorInfo, PaymentMethodDetails, PaymentsResponseData, RefundsResponseData,
         SupportedPaymentMethods, SupportedPaymentMethodsExt,
     },
     types::{
@@ -791,17 +794,15 @@ static MPGS_SUPPORTED_PAYMENT_METHODS: LazyLock<SupportedPaymentMethods> = LazyL
         PaymentMethodType::Credit,
         PaymentMethodDetails {
             mandates: enums::FeatureStatus::NotSupported, // No mandate implementation in current code
-            refunds: enums::FeatureStatus::Supported,      // Refund flows are implemented
+            refunds: enums::FeatureStatus::Supported,     // Refund flows are implemented
             supported_capture_methods: supported_capture_methods.clone(),
-            specific_features: Some(
-                feature_matrix::PaymentMethodSpecificFeatures::Card({
-                    feature_matrix::CardSpecificFeatures {
-                        three_ds: enums::FeatureStatus::NotSupported, // No 3DS implementation found
-                        no_three_ds: enums::FeatureStatus::Supported, // Basic card processing supported
-                        supported_card_networks: supported_card_networks.clone(),
-                    }
-                }),
-            ),
+            specific_features: Some(feature_matrix::PaymentMethodSpecificFeatures::Card({
+                feature_matrix::CardSpecificFeatures {
+                    three_ds: enums::FeatureStatus::NotSupported, // No 3DS implementation found
+                    no_three_ds: enums::FeatureStatus::Supported, // Basic card processing supported
+                    supported_card_networks: supported_card_networks.clone(),
+                }
+            })),
         },
     );
 
@@ -811,17 +812,15 @@ static MPGS_SUPPORTED_PAYMENT_METHODS: LazyLock<SupportedPaymentMethods> = LazyL
         PaymentMethodType::Debit,
         PaymentMethodDetails {
             mandates: enums::FeatureStatus::NotSupported, // No mandate implementation in current code
-            refunds: enums::FeatureStatus::Supported,      // Refund flows are implemented
+            refunds: enums::FeatureStatus::Supported,     // Refund flows are implemented
             supported_capture_methods: supported_capture_methods.clone(),
-            specific_features: Some(
-                feature_matrix::PaymentMethodSpecificFeatures::Card({
-                    feature_matrix::CardSpecificFeatures {
-                        three_ds: enums::FeatureStatus::NotSupported, // No 3DS implementation found
-                        no_three_ds: enums::FeatureStatus::Supported, // Basic card processing supported
-                        supported_card_networks: supported_card_networks.clone(),
-                    }
-                }),
-            ),
+            specific_features: Some(feature_matrix::PaymentMethodSpecificFeatures::Card({
+                feature_matrix::CardSpecificFeatures {
+                    three_ds: enums::FeatureStatus::NotSupported, // No 3DS implementation found
+                    no_three_ds: enums::FeatureStatus::Supported, // Basic card processing supported
+                    supported_card_networks: supported_card_networks.clone(),
+                }
+            })),
         },
     );
 
