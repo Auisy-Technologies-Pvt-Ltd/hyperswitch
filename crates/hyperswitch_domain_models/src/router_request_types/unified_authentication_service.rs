@@ -5,7 +5,7 @@ use common_utils::types::MinorUnit;
 use masking::Secret;
 use time::PrimitiveDateTime;
 
-use crate::{address::Address, payment_method_data::PaymentMethodData};
+use crate::address::Address;
 
 #[derive(Clone, Debug)]
 pub struct UasPreAuthenticationRequestData {
@@ -29,6 +29,7 @@ pub struct MerchantDetails {
     pub three_ds_requestor_url: Option<String>,
     pub three_ds_requestor_id: Option<String>,
     pub three_ds_requestor_name: Option<String>,
+    pub notification_url: Option<url::Url>,
 }
 
 #[derive(Clone, Debug, PartialEq, serde::Serialize)]
@@ -43,9 +44,6 @@ pub struct AuthenticationInfo {
 }
 #[derive(Clone, Debug)]
 pub struct UasAuthenticationRequestData {
-    pub payment_method_data: PaymentMethodData,
-    pub billing_address: Address,
-    pub shipping_address: Option<Address>,
     pub browser_details: Option<super::BrowserInformation>,
     pub transaction_details: TransactionDetails,
     pub pre_authentication_data: super::authentication::PreAuthenticationData,
@@ -53,7 +51,6 @@ pub struct UasAuthenticationRequestData {
     pub sdk_information: Option<api_models::payments::SdkInformation>,
     pub email: Option<common_utils::pii::Email>,
     pub threeds_method_comp_ind: api_models::payments::ThreeDsCompletionIndicator,
-    pub three_ds_requestor_url: String,
     pub webhook_url: String,
 }
 
@@ -72,8 +69,9 @@ pub struct PaymentDetails {
     pub card_expiry_month: Secret<String>,
     pub card_expiry_year: Secret<String>,
     pub cardholder_name: Option<Secret<String>>,
-    pub card_token_number: Secret<String>,
+    pub card_token_number: Option<Secret<String>>,
     pub account_type: Option<common_enums::PaymentMethodType>,
+    pub card_cvc: Option<Secret<String>>,
 }
 
 #[derive(Clone, serde::Deserialize, Debug, serde::Serialize)]
